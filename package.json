@@ -1,0 +1,39 @@
+{
+  "name": "sp-pay",
+  "version": "0.0.3",
+  "license": "MIT",
+  "main": "index.js",
+  "bugs": {
+    "url": "https://github.com/novice79/sp-pay/issues"
+  },
+  "dependencies": {
+    "md5": "^2.0.0",
+    "request": "^2.54.0",
+    "xml2js": "^0.4.6"
+  },
+  "description": "swiftpass payment",
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  },
+  "homepage": "https://github.com/novice79/sp-pay",
+  "keywords": [
+    "swiftpass",
+    "payment"
+  ],
+  "maintainers": [
+    {
+      "name": "novice",
+      "email": "novice@wwpp.date"
+    }
+  ],
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/novice79/sp-pay.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
