@@ -8,7 +8,7 @@ npm install sp-pay -S
 
 ## Usage
 
-获取微信扫码支付二维码
+获取微信正扫二维码
 ```js
 var SPPay = require('sp-pay');
 
@@ -22,8 +22,26 @@ sp_pay.get_wxpay_qr({
 	out_trade_no: '20160203'+Math.random().toString().substr(2, 10),
 	total_fee: 1,
 	spbill_create_ip: '192.168.2.210',
-	notify_url: 'http://wxpay_notify_url',
-	product_id: '1234567890'
+	notify_url: 'http://wxpay_notify_url'
+}, function(err, result){
+	console.log(result);
+});
+```
+获取支付宝正扫二维码
+```js
+var SPPay = require('sp-pay');
+
+var sp_pay = new SPPay({
+	mch_id: '1234567890',
+	partner_key: 'xxxxxxxxxxxxxxxxx' //威富通平台API密钥
+});
+
+sp_pay.get_alipay_qr({
+	body: '扫码支付测试',
+	out_trade_no: '20160203'+Math.random().toString().substr(2, 10),
+	total_fee: 1,
+	spbill_create_ip: '192.168.2.210',
+	notify_url: 'http://alipay_notify_url'
 }, function(err, result){
 	console.log(result);
 });
