@@ -1,5 +1,5 @@
 # swiftpass-pay
-中信支付 for node.js v8.0+
+中信银行支付 for node.js v8.0+
 
 ## Installation
 ```
@@ -32,6 +32,9 @@ sp_pay.get_wxpay_qr({
 	notify_url: 'http://wxpay_notify_url'
 }, function(err, result){
 	console.log(result);
+	//验证银行签名
+	const is_valid = sp_pay.verify_bank_data(result)
+	console.log('is_valid = ' + is_valid)
 });
 ```
 获取支付宝正扫二维码
@@ -43,21 +46,20 @@ sp_pay.get_alipay_qr({
 	spbill_create_ip: '192.168.2.210',
 	notify_url: 'http://alipay_notify_url'
 }, function(err, result){
+	//验证银行签名
+	const is_valid = sp_pay.verify_bank_data(result)
+	console.log('is_valid = ' + is_valid)
 	console.log(result);
 });
 ```
 
-查询订单
+查询订单状态
 ```js
 // 通过订单号查
-sp_pay.query_order_by_id({ transaction_id:"xxxxxx" }, function(err, order){
-	console.log(order);
-});
-
-// 通过商户订单号查
 sp_pay.query_order_by_id({ out_trade_no:"xxxxxx" }, function(err, order){
 	console.log(order);
 });
+
 ```
 
 关闭订单
@@ -69,12 +71,11 @@ sp_pay.close_order({ out_trade_no:"xxxxxx"}, function(err, result){
 退款接口
 ```js
 const params = {
-	mch_id: '1234567890',
-    op_user_id: '商户号即可',
-    out_refund_no: '20160203'+Math.random().toString().substr(2, 10),
+	out_refund_no: '订单号',
+	out_refund_no: '退款单号',
     total_fee: '1', //原支付金额
-    refund_fee: '1', //退款金额
-    transaction_id: '微信订单号'
+	refund_fee: '1', //退款金额    
+	op_user_id: '张三' //操作员
 };
 
 sp_pay.refund_request(params, function(err, result){
