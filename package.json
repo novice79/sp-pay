@@ -7,7 +7,10 @@
     "url": "https://github.com/novice79/sp-pay/issues"
   },
   "dependencies": {
+    "jsrsasign": "^8.0.12",
+    "jsrsasign-util": "^1.0.0",
     "md5": "^2.0.0",
+    "moment": "^2.22.2",
     "request": "^2.54.0",
     "xml2js": "^0.4.6"
   },

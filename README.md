@@ -1,5 +1,5 @@
 # swiftpass-pay
-中信威富通 for node.js
+中信支付 for node.js v8.0+
 
 ## Installation
 ```
@@ -7,16 +7,23 @@ npm install sp-pay -S
 ```
 
 ## Usage
-
+设置商户信息，中信开通账户后会给一个商户id和md5密钥，
+如果想用rsa2签名，需自己生成公、私钥对，并在商户后台上传公钥，上传公钥后可在后台查看银行公钥
+可使用sp_pay.util.gen_keys();生成密钥，生成的密钥信息保存在keys目录下，然后将keys/pub_key_pkcs8_raw.txt的信息提交至银行商户后台
+```js
+const SPPay = require('sp-pay');
+const mch_data = {
+    mch_id: '商户id',
+	md5_key: '商户md5密钥',
+	//以下3项可选，如果以下3项为null，则用md5签名，否则用RSA_1_256签名
+    mch_pri_key: '商户私钥',
+    mch_pub_key: '商户公钥',
+    bank_pub_key: '银行公钥'
+}
+const sp_pay = new SPPay(mch_data);
+```
 获取微信正扫二维码
 ```js
-var SPPay = require('sp-pay');
-
-var sp_pay = new SPPay({
-	mch_id: '1234567890',
-	partner_key: 'xxxxxxxxxxxxxxxxx' //威富通平台API密钥
-});
-
 sp_pay.get_wxpay_qr({
 	body: '扫码支付测试',
 	out_trade_no: '20160203'+Math.random().toString().substr(2, 10),
@@ -29,13 +36,6 @@ sp_pay.get_wxpay_qr({
 ```
 获取支付宝正扫二维码
 ```js
-var SPPay = require('sp-pay');
-
-var sp_pay = new SPPay({
-	mch_id: '1234567890',
-	partner_key: 'xxxxxxxxxxxxxxxxx' //威富通平台API密钥
-});
-
 sp_pay.get_alipay_qr({
 	body: '扫码支付测试',
 	out_trade_no: '20160203'+Math.random().toString().substr(2, 10),
@@ -68,7 +68,7 @@ sp_pay.close_order({ out_trade_no:"xxxxxx"}, function(err, result){
 ```
 退款接口
 ```js
-var params = {
+const params = {
 	mch_id: '1234567890',
     op_user_id: '商户号即可',
     out_refund_no: '20160203'+Math.random().toString().substr(2, 10),
@@ -80,4 +80,9 @@ var params = {
 sp_pay.refund_request(params, function(err, result){
     console.log('refund', arguments);
 });
+```
+返回结果验签，对银行返回的数据(json)，可使用以下方法验签
+```js
+const is_valid = sp_pay.verify_bank_data(result)
+console.log('is_valid = ' + is_valid)
 ```
