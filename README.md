@@ -93,6 +93,12 @@ sp_pay.query_order_by_id({ out_trade_no:"xxxxxx" }, function(err, order){
 });
 
 ```
+撤销订单（only for 反扫支付）
+```js
+sp_pay.reverse_order({ out_trade_no:"xxxxxx"}, function(err, result){
+	console.log(result);
+});
+```
 
 关闭订单
 ```js
